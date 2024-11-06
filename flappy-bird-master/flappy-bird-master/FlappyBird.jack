@@ -1,0 +1,121 @@
+class FlappyBird {
+  /*
+  Models the FlappyBird object and creates/updates the bird image.
+  */
+
+  field int y_offset;           // Y-coordinate on screen
+  field int x_offset;           // X-coordinate on screen
+  field int size_x;             // Width of bird image.
+  field int size_y;             // Height of bird image
+
+
+  /*
+  FlappyBird object constructor.
+
+  @param int altitude Y coordinate to first show bird image.
+  */
+  constructor FlappyBird new(int altitude) {
+    let y_offset = altitude;
+    let x_offset = 160;
+    let size_x = 16;
+    let size_y = 12;
+
+    do buildUpArray();
+    do buildMidArray();
+    do buildDownArray();
+
+    do draw();
+    return this;
+  }
+
+  /*
+  Move bird image coordinates up.
+  */
+  method void moveUp()
+  {
+    do erase();
+    if (y_offset > 30) {
+      let y_offset = y_offset - 30;
+    } else {
+      let y_offset = 0;
+    }
+
+    return;
+  }
+
+  /*
+  Move bird image coordinates down.
+  */
+  method void moveDown()
+  {
+    do erase();
+    if (y_offset < (255 - size_y - 5)) {
+      let y_offset = y_offset + 5;
+    } else {
+      let y_offset = 255 - size_y;
+    }
+
+    return;
+  }
+
+  /*
+  Erase bird image.
+  */
+  method void erase()
+  {
+    do Screen.setColor(false);
+    do Screen.drawRectangle(x_offset, y_offset, x_offset + size_x, y_offset + size_y);
+
+    return;
+  }
+
+  /*
+  Draw bird.
+  */
+  method void draw() {
+    do Screen.setColor(true); // Establece el color a encendido (punto visible)
+    do Screen.drawRectangle(x_offset, y_offset, x_offset + size_x, y_offset + size_y);
+
+    return;
+  }
+
+  /*
+  Get image X-coordinate.
+  */
+  method int getXOffset()
+  {
+    return x_offset;
+  }
+
+  /*
+  Get image Y-coordinate.
+  */
+  method int getYOffset()
+  {
+    return y_offset;
+  }
+
+  /*
+  Get image width.
+  */
+  method int getSizeX()
+  {
+    return size_x;
+  }
+
+  /*
+  Get image height.
+  */
+  method int getSizeY()
+  {
+    return size_y;
+  }
+
+  /*
+  Dispose of Bird object.
+  */
+  method void dispose() {
+     do Memory.deAlloc(this);
+     return;
+  }
+}
